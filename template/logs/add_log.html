@@ -1,0 +1,121 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Save New Log</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="{% static 'css/sb-admin-2.min.css' %}" rel="stylesheet">
+
+</head>
+
+<body class="bg-gradient-primary">
+
+    <div class="container">
+
+        <div class="card o-hidden border-0 shadow-lg my-5">
+            <div class="card-body p-0">
+                <!-- Nested Row within Card Body -->
+                <div class="row">
+                    <!-- تصویر سمت چپ در نمایش دسکتاپ -->
+                    <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
+                    
+                    <div class="col-lg-7">
+                        <div class="p-5">
+                            <div class="text-center">
+                                <h1 class="h4 text-gray-900 mb-4">Add New Log</h1>
+                            </div>
+
+                            <!-- فرم ثبت اطلاعات -->
+                            <form class="user" method="POST" action="{% url 'logs:add_log' %}">
+                                {% csrf_token %}
+
+                                <!-- عنوان کار -->
+                                <div class="form-group">
+                                    <label for="id_title" class="small font-weight-bold">title:</label>
+                                    <input type="text" name="title" class="form-control form-control-user" id="id_title" placeholder="Enter title..." required>
+                                </div>
+
+                                <!-- توضیحات / متن -->
+                                <div class="form-group">
+                                    <label for="id_text" class="small font-weight-bold">description:</label>
+                                    <textarea name="text" class="form-control" id="id_text" rows="3" style="border-radius: 15px;" placeholder="Enter Description..."></textarea>
+                                </div>
+
+                                <!-- زمان شروع و پایان (در یک سطر) -->
+                                <div class="form-group row">
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <label for="id_start_time" class="small font-weight-bold">start time:</label>
+                                        <input type="time" name="start_time" class="form-control form-control-user" id="id_start_time" required>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label for="id_end_time" class="small font-weight-bold">end time:</label>
+                                        <input type="time" name="end_time" class="form-control form-control-user" id="id_end_time" required>
+                                    </div>
+                                </div>
+
+                                <!-- تاریخ و تگ‌ها (در یک سطر) -->
+                                <div class="form-group row">
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <label for="id_date" class="small font-weight-bold">date:</label>
+                                        <input type="date" name="date" class="form-control form-control-user" id="id_date" required>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label for="id_tags" class="small font-weight-bold">tags:</label>
+                                        <input type="text" name="tags" class="form-control form-control-user" id="id_tags" placeholder="مثلا: ورزش, پایتون">
+                                    </div>
+                                </div>
+
+                                <!-- وضعیت (انجام شده / نشده) -->
+                                <div class="form-group class pl-3 mb-4">
+                                    <div class="custom-control custom-checkbox small">
+                                        <input type="checkbox" name="status" class="custom-control-input" id="id_status">
+                                        <label class="custom-control-label" for="id_status">this is done</label>
+                                    </div>
+                                </div>
+
+                                <!-- دکمه ثبت -->
+                                <button type="submit" class="btn btn-primary btn-user btn-block">
+                                    save
+                                </button>
+                                
+                                <hr>
+                                
+                                <!-- دکمه انصراف / بازگشت به داشبورد -->
+                                <a href="{% url 'logs:dashboard' %}" class="btn btn-secondary btn-user btn-block">
+                                    cancel
+                                </a>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="{% static 'js/sb-admin-2.min.js' %}"></script>
+
+</body>
+
+</html>
