@@ -1,5 +1,5 @@
 
-from logs.views import *
+from users.views import *
 from django.contrib import admin
 from django.urls import path
 
@@ -7,5 +7,7 @@ app_name = 'users'
 
 
 urlpatterns = [
-    path('loggin/',loggin_view,name='loggin'),
+    path('login/',login_view,name='login'),
+    path('logout/',logout_viwe,name='logout'),
+    path('register/',regiter_viwe,name='register')
 ]
