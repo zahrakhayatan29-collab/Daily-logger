@@ -6,15 +6,15 @@ from django.contrib import messages
 # Create your views here.
 
 
-def regiter_viwe(request):
+def register_viwe(request):
     if request.method == "POST":
         form = UserCreationForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('/')
+            return redirect("users:login")
         else:
             messages.error(request,'Invalid your data!')
-            return redirect('users/registr.html')
+            return redirect('users:register')
             
     form = UserCreationForm()
 
@@ -38,4 +38,5 @@ def login_view(request):
 @login_required
 def logout_viwe(request):
     logout(request)
+    return redirect('users:register')
     

@@ -2,12 +2,19 @@ from django.shortcuts import render , redirect ,get_object_or_404
 from logs.models import Log
 from datetime import date
 from django.http import JsonResponse
-from django.views.decorators.http import require_POST
+from django.views.decorators.http import require_POST 
+from django.contrib.auth import authenticate, logout , login
+from django.contrib.auth.decorators import login_required
 from logs.forms import FormLog
+
+
 
 def dashboard(request):
     today = date.today()
-    today_tasks = Log.objects.filter(date=today)
+    if request.user.is_authenticated :
+        today_tasks = Log.objects.filter(date=today,user=request.user)
+    else:
+        today_tasks = []
     context = {
         'log' : today_tasks ,
         'today' : today ,
@@ -28,12 +35,14 @@ def toggle_task_status(request, task_id):
     except Log.DoesNotExist:
         return JsonResponse({'success': False, 'error': 'Task not found'}, status=404)
 
-
+@login_required
 def new_log(request):
     if request.method == "POST":
         form = FormLog(request.POST)
         if form.is_valid() :
-            form.save()
+            new_item_form = form.save(commit=False)
+            new_item_form.user = request.user
+            new_item_form.save()
             return redirect('/')
     else:
         form = FormLog()
@@ -49,7 +58,7 @@ def delete_log(request,log_id):
 
 
 def history_logs(request):
-    logs = Log.objects.order_by('-date','start_time')
+    logs = Log.objects.filter(user=request.user).order_by('-date','start_time')
 
     context = {
         'logs':logs
